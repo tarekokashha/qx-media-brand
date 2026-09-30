@@ -1,12 +1,12 @@
 # QX Media brand and website
 
-**An Arabic-first digital presence for a Riyadh marketing agency.**
+**A brand and Arabic-first website for a Riyadh marketing agency, built by Tarek Okasha.**
 
 [Live site](https://qxmedia.sa/) · [Portfolio](https://tarek-portfolio-phi.vercel.app/#brands)
 
 ## The project
 
-QX Media presents strategy, brand identity, campaigns, content, search, and social media services for Saudi and Gulf clients. The work represented here joins the agency's visual language with a custom WordPress theme designed for Arabic and English content.
+I built QX Media's digital presence around the agency's visual language, with a custom WordPress theme for Arabic and English content. The site presents strategy, brand identity, campaigns, content, search, and social media services for Saudi and Gulf clients.
 
 ## Design and build
 
@@ -24,7 +24,7 @@ The local theme source supports these implementation details. Marketing figures 
 
 ## العربية
 
-يقدم المشروع هوية QX Media الرقمية وموقعها الموجه للجمهور السعودي والخليجي. يحتوي المستودع على دراسة حالة وشيفرة قالب WordPress التي أمكن مراجعتها محليًا. لا يشمل الخطوط أو الصور أو مكتبات الطرف الثالث أو بيانات الموقع الفعلي.
+صممت وطورت الحضور الرقمي لـ QX Media وموقعها الموجه للجمهور السعودي والخليجي. يضم المستودع توثيق المشروع وأجزاء مختارة من شيفرة قالب WordPress التي راجعتها محليًا. لا يشمل الخطوط أو الصور أو مكتبات الطرف الثالث أو بيانات الموقع الفعلي.
 
 ## Rights and attribution
 
