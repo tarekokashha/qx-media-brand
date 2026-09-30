@@ -20,7 +20,7 @@ The local theme source supports these implementation details. Marketing figures 
 
 ## Repository contents
 
-`source/qx-theme/` contains the reviewed PHP, CSS, JavaScript, and JSON source from the local theme. Font binaries, brand images, vendor libraries, the generated 3D bundle, WordPress itself, and production data are excluded. This is a source review package, not a ready-to-install copy of the live site.
+`source/qx-theme/` contains selected, reviewed PHP, CSS, JavaScript, and JSON source from the local theme. Contact flows and marketing content, font binaries, brand images, vendor libraries, the generated 3D bundle, WordPress itself, and production data are excluded. This is a source review package, not a ready-to-install copy of the live site.
 
 ## العربية
 
@@ -29,4 +29,3 @@ The local theme source supports these implementation details. Marketing figures 
 ## Rights and attribution
 
 The local theme declares GPL-2.0-or-later for its code. QX Media's brand assets and content remain outside that code license. See [LICENSE-SCOPE.md](LICENSE-SCOPE.md).
-
