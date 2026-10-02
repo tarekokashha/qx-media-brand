@@ -1,0 +1,403 @@
+/* ============================================================================
+   QX MEDIA — THE IMPACT ENGINE (scroll-driven 3D homepage hero)
+
+   Loaded on the front page only.
+
+   The scene palette is deliberately a shade deeper than the site palette, because
+   the hero is a dark lit environment rather than a page surface. HERO_3D_PROMPT.md
+   specifies these five values and START_HERE.md sanctions them for the 3D scene
+   only, so they are namespaced here and never leak into the rest of the site.
+   ========================================================================= */
+
+.qx-hero3d {
+  --h-void: #0a0809; /* the surround, deeper than charcoal */
+  --h-char: #201d1f;
+  --h-burg: #7a1230;
+  --h-crim: #a7153c;
+  --h-terra: #d87959;
+  --h-cream: #f0dfc2;
+
+  /* The pin length. Progress 0 to 1 is spread across (this height - 100vh), so
+     520vh gives 4.2 screens of scroll for the five phases. The phone value is
+     shorter on purpose: a full 520vh adds about 4,400px to a 390px page, and
+     compact mobile is a standing requirement for this site. Change these two
+     numbers and nothing else moves. */
+  --h-pin: 520vh;
+
+  position: relative;
+  block-size: var(--h-pin);
+  background: var(--h-void);
+  color: var(--h-cream);
+}
+
+@media (max-width: 760px) {
+  .qx-hero3d {
+    --h-pin: 320vh;
+  }
+}
+
+/* No animation to scrub, so there is nothing to pin. Collapse to one screen
+   rather than making the visitor scroll five of them past a still image. */
+.qx-hero3d[data-webgl='off'] {
+  --h-pin: 100vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qx-hero3d {
+    --h-pin: 100vh;
+  }
+}
+
+.qx-hero3d__stage {
+  position: sticky;
+  inset-block-start: 0;
+  block-size: 100vh;
+  overflow: hidden;
+}
+
+.qx-hero3d__canvas {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  display: block;
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+
+.qx-hero3d[data-webgl='on'] .qx-hero3d__canvas {
+  opacity: 1;
+}
+
+.qx-hero3d[data-webgl='off'] .qx-hero3d__canvas {
+  display: none;
+}
+
+/* ---- Poster ------------------------------------------------------------
+   Paints immediately so the hero is never an empty black box, and stays put if
+   WebGL fails. Pure CSS: zero bytes above the fold, no banding, and correct at
+   any viewport ratio. The mark itself arrives with the scene. */
+
+.qx-hero3d__poster {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(115% 85% at 50% 62%, #3c0c1c 0%, #1a1114 42%, var(--h-void) 100%);
+  transition: opacity 1.1s ease;
+}
+
+.qx-hero3d[data-webgl='on'] .qx-hero3d__poster {
+  opacity: 0;
+}
+
+/* Darkens the top and bottom so the nav, the copy and the metrics keep contrast
+   over whatever the scene is doing behind them. */
+.qx-hero3d__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 8, 9, 0.8) 0%,
+    rgba(10, 8, 9, 0.15) 30%,
+    rgba(10, 8, 9, 0.1) 62%,
+    rgba(10, 8, 9, 0.85) 100%
+  );
+}
+
+/* ---- Overlay ---------------------------------------------------------- */
+
+.qx-hero3d__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 104px 6vw 44px;
+}
+
+/* Only the actual controls take pointer events back. */
+.qx-hero3d__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 26px;
+  margin-block-start: 36px;
+  pointer-events: auto;
+}
+
+.qx-hero3d__intro {
+  max-inline-size: 620px;
+}
+
+.qx-hero3d__eyebrow {
+  color: var(--h-terra);
+  margin-block-end: 26px;
+}
+
+.qx-hero3d__h1 {
+  margin: 0;
+  font-family: var(--qx-latin);
+  font-weight: 400;
+  font-size: clamp(32px, 5vw, 68px);
+  line-height: 1.1;
+  color: var(--h-cream);
+}
+
+html[lang^='ar'] .qx-hero3d__h1 {
+  font-family: var(--qx-arabic);
+  font-weight: 800;
+  font-size: clamp(34px, 5.4vw, 74px);
+  line-height: 1.28;
+}
+
+.qx-hero3d__lead {
+  margin: 24px 0 0;
+  max-inline-size: 460px;
+  font-family: var(--qx-latin);
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.85;
+  color: rgba(240, 223, 194, 0.72);
+}
+
+html[lang^='ar'] .qx-hero3d__lead {
+  font-family: var(--qx-arabic);
+  font-weight: 300;
+  max-inline-size: 480px;
+  font-size: clamp(14.5px, 1.15vw, 17px);
+  line-height: 2;
+}
+
+/* The solid consultation CTA, in the scene's crimson rather than the site's
+   burgundy: on near-black, burgundy closes up and crimson holds. */
+.qx-btn--ember {
+  color: var(--h-cream);
+  background: var(--h-crim);
+  border-color: var(--h-crim);
+  padding: 15px 34px;
+}
+
+.qx-btn--ember:hover {
+  background: transparent;
+  color: var(--h-cream);
+}
+
+.qx-tlink--onDark {
+  color: rgba(240, 223, 194, 0.85);
+  border-block-end-color: rgba(240, 223, 194, 0.35);
+}
+
+.qx-tlink--onDark:hover {
+  color: var(--h-cream);
+  border-block-end-color: var(--h-cream);
+}
+
+/* ---- Stage labels ------------------------------------------------------
+   All three sit in the same place and cross-fade. They start at opacity 0 so
+   that with no JavaScript they do not stack three lines on top of each other;
+   the engine fades them in and out. Decorative progress markers, so losing
+   them costs a visitor nothing. */
+
+.qx-hero3d__phases {
+  position: relative;
+  block-size: 1px;
+}
+
+.qx-hero3d__phase {
+  position: absolute;
+  inset-block-end: 16px;
+  inset-inline-start: 0;
+  margin: 0;
+  opacity: 0;
+  font-family: var(--qx-latin);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: rgba(240, 223, 194, 0.7);
+}
+
+html[lang^='ar'] .qx-hero3d__phase {
+  font-family: var(--qx-arabic);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.qx-hero3d__phase-n {
+  font-family: var(--qx-latin);
+  color: var(--h-terra);
+  margin-inline-end: 10px;
+}
+
+/* ---- Metrics ---------------------------------------------------------- */
+
+.qx-hero3d__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px 40px;
+  border-block-start: 1px solid rgba(240, 223, 194, 0.18);
+  padding-block-start: 26px;
+}
+
+.qx-hero3d__n {
+  display: block;
+  font-family: var(--qx-latin);
+  font-size: clamp(26px, 2.6vw, 38px);
+  line-height: 1;
+  color: var(--h-cream);
+  font-variant-numeric: lining-nums tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.qx-hero3d__n.is-accent {
+  color: var(--h-terra);
+}
+
+.qx-hero3d__cap {
+  display: block;
+  margin-block-start: 6px;
+  font-family: var(--qx-latin);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  color: rgba(240, 223, 194, 0.6);
+}
+
+html[lang^='ar'] .qx-hero3d__cap {
+  font-family: var(--qx-arabic);
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+/* ---- Scroll cue -------------------------------------------------------
+   Centred without a transform, so it does not need a direction-dependent
+   translate to stay in the middle. */
+
+.qx-hero3d__cue {
+  position: absolute;
+  inset-block-end: 22px;
+  inset-inline: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.qx-hero3d__cue-word {
+  font-family: var(--qx-latin);
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  color: rgba(240, 223, 194, 0.5);
+}
+
+html[lang^='ar'] .qx-hero3d__cue-word {
+  font-family: var(--qx-arabic);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.qx-hero3d__cue-line {
+  inline-size: 1px;
+  block-size: 26px;
+  background: linear-gradient(to bottom, rgba(240, 223, 194, 0.6), transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .qx-hero3d__cue-line {
+    animation: qx-cue 2.4s var(--qx-ease) infinite;
+  }
+}
+
+@keyframes qx-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+/* ---- No animation to scrub --------------------------------------------
+   Reduced motion, or no WebGL. The prototype called overlay(1) here, which
+   faded the headline and both CTAs to zero and left a visitor with nothing but
+   four numbers. The copy is the hero in this state, so it stays; the scroll cue
+   and the stage labels go, because there is nothing to scroll through. */
+
+.qx-hero3d[data-webgl='off'] .qx-hero3d__cue,
+.qx-hero3d[data-static] .qx-hero3d__cue {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qx-hero3d__cue {
+    display: none;
+  }
+}
+
+/* ---- Mobile ----------------------------------------------------------- */
+
+@media (max-width: 920px) {
+  .qx-hero3d__overlay {
+    padding-block-start: 96px;
+  }
+}
+
+@media (max-width: 760px) {
+  .qx-hero3d__overlay {
+    padding: 92px 6vw 32px;
+  }
+
+  .qx-hero3d__intro {
+    max-inline-size: none;
+  }
+
+  .qx-hero3d__h1,
+  html[lang^='ar'] .qx-hero3d__h1 {
+    font-size: clamp(31px, 8.6vw, 40px);
+  }
+
+  .qx-hero3d__lead,
+  html[lang^='ar'] .qx-hero3d__lead {
+    font-size: 15px;
+    line-height: 1.9;
+    max-inline-size: none;
+  }
+
+  .qx-hero3d__actions {
+    gap: 18px;
+    margin-block-start: 28px;
+  }
+
+  .qx-hero3d__actions .qx-btn {
+    inline-size: 100%;
+    text-align: center;
+  }
+
+  /* 2x2, the same shape the rest of the mobile page uses. */
+  .qx-hero3d__metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 16px;
+    padding-block-start: 20px;
+  }
+
+  .qx-hero3d__n {
+    font-size: 26px;
+  }
+
+  .qx-hero3d__cap {
+    font-size: 11.5px;
+  }
+}
+
+/* Short landscape phones: the intro and the metrics cannot both fit, so the
+   metrics step aside rather than colliding with the CTA. */
+@media (max-height: 560px) and (min-width: 761px) {
+  .qx-hero3d__metrics {
+    display: none;
+  }
+}

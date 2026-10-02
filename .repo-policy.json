@@ -1,0 +1,59 @@
+{
+  "requiredFiles": [
+    "README.md",
+    "README.ar.md",
+    "LICENSE",
+    "NOTICE.md",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "CHANGELOG.md",
+    "qx-theme/style.css",
+    "qx-theme/functions.php",
+    "docs/architecture.md",
+    "docs/3d-hero.md",
+    "docs/rtl-and-arabic.md",
+    "docs/performance.md",
+    "docs/design-system.md",
+    "docs/install.md",
+    "docs/decisions.md"
+  ],
+  "forbiddenPaths": [
+    "\\.(woff2?|otf|ttf|eot)$",
+    "\\.(zip|tar|gz|tgz|7z|rar)$",
+    "(^|/)\\.env(\\..*)?$",
+    "\\.(pem|key|p12|pfx)$",
+    "(^|/)id_(rsa|ed25519)",
+    "\\.(sql|sqlite|db)$",
+    "(^|/)node_modules/",
+    "(^|/)\\.DS_Store$",
+    "^qx-theme/assets/img/.+\\.(png|jpe?g|webp|svg|gif|ico)$"
+  ],
+  "noThirdPartyDirs": [
+    "qx-theme"
+  ],
+  "noThirdPartyHosts": [
+    "w3.org",
+    "schema.org",
+    "gnu.org",
+    "wa.me",
+    "w.org",
+    "wordpress.org",
+    "github.com",
+    "example.com",
+    "tarek-portfolio-phi.vercel.app",
+    "wp.org"
+  ],
+  "allowedEmails": [
+    "@example\\.(com|org)$",
+    "@users\\.noreply\\.github\\.com$",
+    "@your-domain\\.example$"
+  ],
+  "allowedPhones": [
+    "966500000000"
+  ],
+  "jsSyntaxDirs": [
+    "qx-theme/assets/js",
+    "scripts"
+  ]
+}

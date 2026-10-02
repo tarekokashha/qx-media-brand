@@ -1,0 +1,76 @@
+# A throwaway WordPress for trying the QX theme locally.
+#
+# It exists so the theme is never activated on a live, ranking site without having been seen
+# working first. Nothing here ships to production: the theme (./qx-theme) is the only
+# deliverable.
+#
+#   docker compose up -d
+#   ./scripts/wp-setup.sh        # installs WordPress, activates the theme, creates the pages
+#   open http://localhost:8088
+#
+# Everything binds to 127.0.0.1, so the throwaway database and the admin account are not
+# reachable from the network. The credentials below are local-only test values.
+
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_DATABASE: wp
+      MARIADB_USER: wp
+      MARIADB_PASSWORD: wp
+      MARIADB_ROOT_PASSWORD: root
+    volumes:
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'healthcheck.sh', '--connect', '--innodb_initialized']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  wordpress:
+    image: wordpress:php8.3-apache
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - '127.0.0.1:8088:80'
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wp
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wp
+      # Surface PHP notices during development: a theme that emits warnings on a fresh
+      # install will emit them on the client's server too.
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG_DISPLAY', true);
+        define('WP_DEBUG_LOG', false);
+        // The theme reads its contact details from constants. These are the demo values;
+        // set your own in your site's wp-config.php.
+        define('QX_WHATSAPP', '966500000000');
+        define('QX_EMAIL', 'hello@example.com');
+    volumes:
+      - wpdata:/var/www/html
+      # The theme is mounted live, so an edit on disk is visible on refresh.
+      - ./qx-theme:/var/www/html/wp-content/themes/qx-theme
+
+  wpcli:
+    image: wordpress:cli-php8.3
+    depends_on:
+      db:
+        condition: service_healthy
+    user: '33:33'
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wp
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wp
+    volumes:
+      - wpdata:/var/www/html
+      - ./qx-theme:/var/www/html/wp-content/themes/qx-theme
+    entrypoint: ['wp']
+    command: ['--info']
+
+volumes:
+  dbdata:
+  wpdata:

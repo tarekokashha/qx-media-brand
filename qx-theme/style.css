@@ -1,0 +1,718 @@
+/*!
+Theme Name: QX Media
+Theme URI: https://github.com/tarekokashha/qx-media-brand
+Author: Tarek Okasha
+Author URI: https://tarek-portfolio-phi.vercel.app
+Description: Arabic-first, bilingual editorial theme with a scroll-driven 3D hero. Built for QX Media, Riyadh. Block-theme design tokens, no page builder required, no external requests, logical-property RTL. Brand fonts and logo artwork are not distributed: the theme falls back to system serifs and a text wordmark until you add your own.
+Version: 2.3.0
+Requires at least: 6.6
+Tested up to: 6.9
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: qx
+Tags: rtl-language-support, translation-ready, one-column, custom-colors, custom-menu, editor-style
+*/
+
+/* ============================================================================
+   QX MEDIA — DESIGN SYSTEM
+   Built to the official design handoff (design_handoff_website_redesign).
+
+   Every colour, size and easing below is taken from that handoff. The README is
+   explicit that these are final: "Only these colors are used anywhere in the
+   design... Never introduce new colors." So this file introduces none.
+
+   Two rules carried over that are easy to break later and worth stating:
+     1. Prole ships ONE weight (400). English hierarchy comes from size and
+        letter-spacing, never from weight — do not fake bold.
+     2. Radius is 0 everywhere. No shadows anywhere.
+   ========================================================================= */
+
+:root {
+  /* ---- Palette (handoff §Design Tokens › Colors) ----------------------- */
+  --qx-cream: #f6f0e2; /* page background, light sections */
+  --qx-ink: #222021; /* primary text on light */
+  --qx-burgundy: #9c1b39; /* brand primary accent */
+  --qx-charcoal: #1e1c1d; /* dark section background */
+  --qx-warm-cream: #eadac0; /* text on dark / burgundy */
+  --qx-terracotta: #d4795e; /* secondary accent on dark */
+  --qx-gold: #e2bd75; /* tertiary accent on dark: stats, quote marks */
+
+  /* Opacity variants — the only permitted derivations. */
+  --qx-ink-70: rgba(34, 32, 33, 0.7);
+  --qx-ink-78: rgba(34, 32, 33, 0.78);
+  --qx-ink-65: rgba(34, 32, 33, 0.65);
+  --qx-ink-60: rgba(34, 32, 33, 0.6);
+  --qx-ink-40: rgba(34, 32, 33, 0.4);
+  --qx-ink-16: rgba(34, 32, 33, 0.16);
+  --qx-ink-12: rgba(34, 32, 33, 0.12);
+  --qx-warm-75: rgba(234, 218, 192, 0.75);
+  --qx-warm-72: rgba(234, 218, 192, 0.72);
+  --qx-warm-65: rgba(234, 218, 192, 0.65);
+  --qx-warm-25: rgba(234, 218, 192, 0.25);
+  --qx-gold-50: rgba(226, 189, 117, 0.5);
+  --qx-nav-solid: rgba(246, 240, 226, 0.97);
+
+  /* ---- Families -------------------------------------------------------- */
+  --qx-latin: 'Prole', 'Times New Roman', serif;
+  --qx-arabic: 'Camel', 'Traditional Arabic', serif;
+
+  /* ---- Rhythm ---------------------------------------------------------- */
+  --qx-pad-x: 5vw;
+  --qx-max: 1200px;
+  --qx-max-narrow: 1100px;
+  --qx-sec: 150px; /* standard section padding-block */
+  --qx-sec-sm: 110px;
+  --qx-sec-lg: 170px;
+
+  /* ---- Motion ---------------------------------------------------------- */
+  --qx-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --qx-reveal: 0.95s;
+  --qx-hover: 0.45s;
+
+  color-scheme: light;
+}
+
+/* ============================================================================
+   BASE
+   ========================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--qx-cream);
+  color: var(--qx-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* `clip`, not `hidden`. `overflow-x: hidden` makes the body a scroll container on the
+     block axis too, which silently breaks `position: sticky` for descendants relative to
+     the viewport — and the 3D hero's whole pinned stage depends on it. `clip` prevents the
+     same horizontal overflow without creating a scroll container. */
+  overflow-x: clip;
+  font-family: var(--qx-latin);
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+/* Arabic pages: Camel throughout, at weight 300 for body, with the looser
+   leading Naskh needs. Letter-spacing is never applied to Arabic — tracking
+   breaks the cursive joins. */
+html[lang^='ar'] body {
+  font-family: var(--qx-arabic);
+  font-weight: 300;
+  line-height: 2;
+}
+
+[dir='rtl'] :is(h1, h2, h3, h4, h5, h6, p, li, a, span, button, label, input, textarea, select) {
+  letter-spacing: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 400;
+}
+
+html[lang^='ar'] :is(h1, h2, h3, h4) {
+  font-family: var(--qx-arabic);
+}
+
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--qx-ink);
+  text-decoration: none;
+  transition: color 0.35s var(--qx-ease);
+}
+
+a:hover {
+  color: var(--qx-burgundy);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-inline-size: 100%;
+  height: auto;
+}
+
+::selection {
+  background: var(--qx-burgundy);
+  color: var(--qx-warm-cream);
+}
+
+:focus-visible {
+  outline: 2px solid var(--qx-burgundy);
+  outline-offset: 3px;
+}
+
+/* Anchor targets must clear the 80px fixed header. */
+:where(section, [id]) {
+  scroll-margin-block-start: 110px;
+}
+
+.qx-sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.qx-skip-link {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--qx-burgundy);
+  color: var(--qx-cream);
+  transform: translateY(-120%);
+  transition: transform 0.3s var(--qx-ease);
+}
+
+.qx-skip-link:focus {
+  transform: translateY(0);
+  color: var(--qx-cream);
+}
+
+/* ============================================================================
+   TYPE PRIMITIVES
+
+   The handoff drives hierarchy with size and tracking, not weight — because
+   Prole has only one weight. Arabic uses Camel's real weights (300–800).
+   ========================================================================= */
+
+/* The tracked eyebrow label above every section. Always Prole, always tracked,
+   even on Arabic pages — in the handoff these read as Latin small caps. */
+.qx-label {
+  display: block;
+  font-family: var(--qx-latin);
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--qx-burgundy);
+}
+
+/* Arabic labels are Arabic words, so they take Camel and lose the tracking. */
+.qx-label--ar {
+  font-family: var(--qx-arabic);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.qx-label--onDark {
+  color: var(--qx-terracotta);
+}
+
+.qx-label--onBurgundy {
+  color: var(--qx-gold);
+}
+
+/* Display: the hero headline. */
+.qx-display {
+  font-family: var(--qx-latin);
+  font-size: clamp(44px, 6.8vw, 96px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+html[lang^='ar'] .qx-display {
+  font-family: var(--qx-arabic);
+  font-weight: 800;
+  font-size: clamp(46px, 7.2vw, 104px);
+  line-height: 1.28;
+  letter-spacing: 0;
+}
+
+/* Display at the size the closing CTA and the interior-page heroes use. */
+.qx-display--md {
+  font-size: clamp(40px, 6vw, 84px);
+}
+
+html[lang^='ar'] .qx-display--md {
+  font-size: clamp(40px, 6vw, 84px);
+  line-height: 1.35;
+}
+
+.qx-display--sm {
+  font-size: clamp(42px, 6vw, 84px);
+}
+
+html[lang^='ar'] .qx-display--sm {
+  font-size: clamp(42px, 6.4vw, 92px);
+  line-height: 1.3;
+}
+
+.qx-h2 {
+  font-family: var(--qx-latin);
+  font-size: clamp(30px, 3.8vw, 54px);
+  line-height: 1.2;
+}
+
+html[lang^='ar'] .qx-h2 {
+  font-family: var(--qx-arabic);
+  font-weight: 700;
+  font-size: clamp(30px, 3.8vw, 54px);
+  line-height: 1.5;
+}
+
+.qx-h2--lg {
+  font-size: clamp(32px, 4.4vw, 62px);
+}
+
+html[lang^='ar'] .qx-h2--lg {
+  line-height: 1.6;
+}
+
+/* The service-row and story headings sit a step below a section heading. */
+.qx-h2--sm {
+  font-size: clamp(26px, 2.8vw, 38px);
+}
+
+html[lang^='ar'] .qx-h2--sm {
+  font-size: clamp(26px, 3vw, 42px);
+  line-height: 1.5;
+}
+
+.qx-h3 {
+  font-family: var(--qx-latin);
+  font-size: 23px;
+  line-height: 1.35;
+}
+
+html[lang^='ar'] .qx-h3 {
+  font-family: var(--qx-arabic);
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 1.6;
+}
+
+.qx-body {
+  font-family: var(--qx-latin);
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--qx-ink-78);
+}
+
+html[lang^='ar'] .qx-body {
+  font-family: var(--qx-arabic);
+  font-weight: 300;
+  font-size: 19px;
+  line-height: 2;
+}
+
+.qx-body--sm {
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--qx-ink-60);
+}
+
+html[lang^='ar'] .qx-body--sm {
+  font-size: 15px;
+}
+
+.qx-body--onDark {
+  color: var(--qx-warm-72);
+}
+
+/* Numerals always take Prole, even inside Arabic — figures read left-to-right. */
+.qx-stat {
+  font-family: var(--qx-latin);
+  font-size: 42px;
+  line-height: 1;
+  color: var(--qx-ink);
+  font-variant-numeric: lining-nums tabular-nums;
+  /* Figures read left-to-right even inside Arabic. `direction` alone was not enough:
+     the trailing "+" in "120+" is a bidi-neutral character, so inside an RTL paragraph
+     it was reordered to the front and rendered "+120". Isolating the run fixes it, and
+     the markup also carries dir="ltr" as a belt-and-braces guard. */
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.qx-stat--lg {
+  font-size: clamp(44px, 4vw, 60px);
+}
+
+.qx-stat--accent {
+  color: var(--qx-burgundy);
+}
+
+.qx-stat--gold {
+  color: var(--qx-gold);
+}
+
+.qx-stat__cap {
+  display: block;
+  margin-block-start: 8px;
+  font-size: 14.5px;
+  color: var(--qx-ink-65);
+}
+
+html[lang^='ar'] .qx-stat__cap {
+  font-family: var(--qx-arabic);
+  font-weight: 300;
+}
+
+/* ============================================================================
+   BUTTONS & LINKS
+
+   Handoff §Buttons: the primary CTA is a SOLID burgundy fill with cream text,
+   1px burgundy border, no radius, no shadow. Hover inverts it to a transparent
+   fill with burgundy text over 500ms.
+
+   On dark grounds it becomes a cream outline instead (--onDark) — burgundy on
+   charcoal or on burgundy has no contrast.
+   ========================================================================= */
+
+.qx-btn {
+  display: inline-block;
+  font-family: var(--qx-latin);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--qx-cream);
+  background: var(--qx-burgundy);
+  border: 1px solid var(--qx-burgundy);
+  padding: 17px 40px;
+  border-radius: 0;
+  transition:
+    background 0.5s var(--qx-ease),
+    color 0.5s var(--qx-ease);
+}
+
+html[lang^='ar'] .qx-btn {
+  font-family: var(--qx-arabic);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.qx-btn:hover {
+  background: transparent;
+  color: var(--qx-burgundy);
+}
+
+/* Full-width variant — the CTA pinned to the bottom of the mobile menu panel. */
+.qx-btn--block {
+  display: block;
+  inline-size: 100%;
+  text-align: center;
+  padding-inline: 24px;
+  padding-block: 16px;
+}
+
+/* The quieter ink-outlined variant used in the nav bar. The brief is explicit that this
+   one does NOT become solid, so `background` is reset rather than inherited from .qx-btn. */
+.qx-btn--ink {
+  color: var(--qx-ink);
+  background: transparent;
+  border-color: var(--qx-ink);
+  padding: 11px 26px;
+  font-size: 13px;
+}
+
+html[lang^='ar'] .qx-btn--ink {
+  font-size: 14px;
+}
+
+.qx-btn--ink:hover {
+  background: var(--qx-ink);
+  color: var(--qx-cream);
+}
+
+/* On charcoal and burgundy grounds the button is a cream outline on a transparent fill.
+   Burgundy on either of those has no usable contrast: on charcoal it reads as a muddy
+   block, and on the burgundy band the fill disappears entirely. Resetting `background`
+   here is what keeps the solid primary from leaking onto dark sections. */
+.qx-btn--onDark {
+  color: var(--qx-warm-cream);
+  background: transparent;
+  border-color: rgba(234, 218, 192, 0.5);
+}
+
+.qx-btn--onDark:hover {
+  background: var(--qx-warm-cream);
+  color: var(--qx-charcoal);
+  border-color: var(--qx-warm-cream);
+}
+
+/* The same outline sitting on the burgundy band inverts to cream fill with burgundy text. */
+.qx-burgundy .qx-btn--onDark:hover {
+  color: var(--qx-burgundy);
+}
+
+/* The secondary action: a text link with a hairline under it. */
+.qx-tlink {
+  display: inline-block;
+  font-family: var(--qx-latin);
+  font-size: 16px;
+  color: var(--qx-ink);
+  border-block-end: 1px solid var(--qx-ink-40);
+  padding-block-end: 4px;
+  transition:
+    color 0.35s var(--qx-ease),
+    border-color 0.35s var(--qx-ease);
+}
+
+html[lang^='ar'] .qx-tlink {
+  font-family: var(--qx-arabic);
+  font-weight: 500;
+}
+
+.qx-tlink:hover {
+  color: var(--qx-burgundy);
+  border-block-end-color: var(--qx-burgundy);
+}
+
+.qx-tlink--gold {
+  color: var(--qx-gold);
+  border-block-end-color: var(--qx-gold-50);
+}
+
+.qx-tlink--gold:hover {
+  color: var(--qx-warm-cream);
+  border-block-end-color: var(--qx-warm-cream);
+}
+
+.qx-tlink--onDark {
+  color: var(--qx-warm-cream);
+  border-block-end-color: var(--qx-warm-25);
+}
+
+.qx-tlink--onDark:hover {
+  color: var(--qx-gold);
+  border-block-end-color: var(--qx-gold);
+}
+
+/* ============================================================================
+   LAYOUT
+   ========================================================================= */
+
+.qx-section {
+  padding: var(--qx-sec) var(--qx-pad-x);
+  position: relative;
+}
+
+.qx-section--sm {
+  padding-block: var(--qx-sec-sm);
+}
+
+.qx-section--lg {
+  padding-block: var(--qx-sec-lg);
+}
+
+.qx-shell {
+  max-inline-size: var(--qx-max);
+  margin-inline: auto;
+}
+
+.qx-shell--narrow {
+  max-inline-size: var(--qx-max-narrow);
+}
+
+.qx-dark {
+  background: var(--qx-charcoal);
+  color: var(--qx-warm-cream);
+}
+
+.qx-dark a {
+  color: var(--qx-warm-cream);
+}
+
+.qx-dark a:hover {
+  color: var(--qx-gold);
+}
+
+.qx-burgundy {
+  background: var(--qx-burgundy);
+  color: var(--qx-warm-cream);
+}
+
+.qx-burgundy a {
+  color: var(--qx-warm-cream);
+}
+
+/* The QX mark bled off a corner at 8% opacity.
+
+   The round-2 handoff mirrors this per direction: the page-top watermark sits `left` in the
+   Arabic composition and `right` in the English one, which is the same corner in reading
+   terms — the inline END. So it takes logical properties and flips for free. (Round 1 had it
+   physically left in both, which is why this used to be a `left`.) */
+.qx-watermark {
+  position: absolute;
+  inset-block-start: -4vw;
+  inset-inline-end: -12vw;
+  inline-size: 58vw;
+  min-inline-size: 420px;
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Interior-page heroes: a little lower and smaller than the homepage's. */
+.qx-watermark--page {
+  inset-block-start: -8vw;
+  inline-size: 48vw;
+  min-inline-size: 360px;
+}
+
+/* The closing CTA's watermark bleeds off the opposite corner: bottom, inline start. */
+.qx-watermark--cta {
+  inset-block-start: auto;
+  inset-block-end: -14vw;
+  inset-inline-end: auto;
+  inset-inline-start: -10vw;
+  inline-size: 44vw;
+  min-inline-size: 340px;
+}
+
+/* Two-column row: heading against a link, baseline-aligned at the ends. */
+.qx-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* A hairline above the section, where the design separates two light bands. */
+.qx-section--rule {
+  border-block-start: 1px solid var(--qx-ink-16);
+}
+
+/* ---- Vertical rhythm ---------------------------------------------------
+   Three steps, used between a section's label, its heading and its content.
+   These are classes rather than inline styles for one reason: the mobile block
+   has to be able to compress them, and an inline style would outrank it. */
+
+.qx-gap-label {
+  margin-block-end: 40px;
+}
+
+.qx-gap-head {
+  margin-block-end: 72px;
+}
+
+.qx-gap-body {
+  margin-block-start: 56px;
+}
+
+@media (max-width: 760px) {
+  .qx-gap-label {
+    margin-block-end: 22px;
+  }
+
+  .qx-gap-head {
+    margin-block-end: 32px;
+  }
+
+  .qx-gap-body {
+    margin-block-start: 28px;
+  }
+}
+
+/* ============================================================================
+   MOTION
+
+   Handoff: sections fade in and rise 24px as they enter, 0.95s. Implemented on
+   a view() timeline where supported so there is no scroll listener at all, with
+   an IntersectionObserver fallback added by qx.js for Firefox.
+   ========================================================================= */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .qx-reveal {
+      animation: qx-rise var(--qx-reveal) var(--qx-ease) both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 22%;
+    }
+  }
+
+  /* Fallback path: qx.js adds .qx-js-reveal to <html> only when view() is
+     unsupported, and toggles .is-in per element. */
+  .qx-js-reveal .qx-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity var(--qx-reveal) var(--qx-ease),
+      transform var(--qx-reveal) var(--qx-ease);
+  }
+
+  .qx-js-reveal .qx-reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes qx-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+  }
+
+  .qx-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

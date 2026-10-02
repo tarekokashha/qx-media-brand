@@ -1,0 +1,28 @@
+{
+  "name": "qx-media-brand",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Arabic-first, bilingual WordPress theme with a scroll-driven 3D hero, built for QX Media in Riyadh by Tarek Okasha.",
+  "license": "GPL-2.0-or-later",
+  "author": "Tarek Okasha",
+  "homepage": "https://github.com/tarekokashha/qx-media-brand",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarekokashha/qx-media-brand.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tarekokashha/qx-media-brand/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "node scripts/check-repo.mjs && node scripts/gate-rtl.mjs && php scripts/check-content-keys.php",
+    "check:repo": "node scripts/check-repo.mjs",
+    "check:rtl": "node scripts/gate-rtl.mjs",
+    "check:content": "php scripts/check-content-keys.php",
+    "build:hero": "node scripts/build-hero.mjs",
+    "wp:setup": "./scripts/wp-setup.sh"
+  }
+}

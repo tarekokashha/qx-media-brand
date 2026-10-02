@@ -1,0 +1,98 @@
+/* ============================================================================
+   QX MEDIA — BRAND TYPEFACES
+
+   These are QX's own fonts, supplied in the design handoff's assets/fonts folder:
+
+     Prole  — Latin display + body serif. ONE weight (400). English hierarchy
+              comes from size and letter-spacing; never synthesise bold.
+     Camel  — "Year of the Camel", the Arabic display + body serif, in five real
+              weights (300/400/500/700/800).
+
+   Shipped as WOFF2 rather than the original OpenType: the handoff's six OTFs are
+   1797 KB, which would have been the single heaviest thing on the site. Subsetting
+   Camel to the Arabic range (Prole covers Latin, so Camel's 274 Latin and 63
+   Cyrillic glyphs can never be used) and compressing brought that to 398 KB —
+   a 78% reduction with no substitution and no visual change.
+
+   `unicode-range` is the other half of the win: an English page never downloads
+   the Arabic family, so English costs 25 KB of font and Arabic costs 373 KB.
+
+   All Arabic shaping tables (GSUB/GPOS: init/medi/fina/liga/mark/mkmk) were kept
+   during subsetting. Dropping those is the classic way to break cursive joining
+   and leave Arabic letters standing apart.
+
+   NOT DISTRIBUTED WITH THIS REPOSITORY. Prole and Camel are QX Media's licensed brand
+   typefaces and stay with the brand. The @font-face rules below describe the files the
+   theme expects in assets/fonts/ (prole-derose.woff2, camel-light/regular/medium/bold/
+   extrabold.woff2). Until you add yours, the browser uses the fallback stack declared in
+   style.css (--qx-latin, --qx-arabic) and nothing breaks: every face is font-display: swap
+   and the preload tag in functions.php is skipped when its file is missing.
+   ========================================================================= */
+
+/* ---- Prole — Latin ----------------------------------------------------- */
+@font-face {
+  font-family: 'Prole';
+  src: url('../fonts/prole-derose.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+/* ---- Camel — Arabic, five weights -------------------------------------- */
+@font-face {
+  font-family: 'Camel';
+  src: url('../fonts/camel-light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
+    U+08E3-08FF, U+200C-200F, U+2010-2015, U+2018-201D, U+2026, U+202A-202E,
+    U+2039-203A, U+00AB, U+00BB, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: 'Camel';
+  src: url('../fonts/camel-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
+    U+08E3-08FF, U+200C-200F, U+2010-2015, U+2018-201D, U+2026, U+202A-202E,
+    U+2039-203A, U+00AB, U+00BB, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: 'Camel';
+  src: url('../fonts/camel-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
+    U+08E3-08FF, U+200C-200F, U+2010-2015, U+2018-201D, U+2026, U+202A-202E,
+    U+2039-203A, U+00AB, U+00BB, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: 'Camel';
+  src: url('../fonts/camel-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
+    U+08E3-08FF, U+200C-200F, U+2010-2015, U+2018-201D, U+2026, U+202A-202E,
+    U+2039-203A, U+00AB, U+00BB, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: 'Camel';
+  src: url('../fonts/camel-extrabold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
+    U+08E3-08FF, U+200C-200F, U+2010-2015, U+2018-201D, U+2026, U+202A-202E,
+    U+2039-203A, U+00AB, U+00BB, U+FB50-FDFF, U+FE70-FEFF;
+}
